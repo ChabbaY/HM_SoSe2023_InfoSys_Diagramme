@@ -1,0 +1,68 @@
+@startuml
+|Kunde|
+start
+:Anmeldung bei amazon.com
+mit korrekten Zugangsdaten;
+|Webshop|
+:Authentifizierung;
+:Darstellung Startseite;
+|Kunde|
+:Suche nach Produkt;
+|Webshop|
+:Datenbankabfrage;
+:Darstellung Liste;
+|Kunde|
+:Auswahl Produkt;
+|Webshop|
+:Datenbankabfrage;
+|ERP System|
+:Verfügbarkeitsprüfung;
+if (kleine Menge?)) then
+    :Rückgabe als Zahl;
+else
+    :Rückgabe als "Verfügbar";
+endif
+|Webshop|
+:Darstellung Detailseite;
+|Kunde|
+:"Jetzt kaufen";
+|Webshop|
+:Darstellung
+Bestellübersicht;
+|Kunde|
+:Auswahl hinterlegter Kreditkarte;
+:"Jetzt kostenpflichtig bestellen";
+|ERP System|
+:Verfügbarkeitsprüfung;
+if (Verfügbar?) then
+    :Reservierung
+    der ausgewählten Menge;
+else
+    :Fehlermeldung;
+    end
+endif
+|Webshop|
+:Darstellung "Bestellung erfolgreich";
+:Versand E-Mail "Bestellung erfolgreich";
+|Kunde|
+:Erhalt E-Mail "Bestellung erfolgreich";
+|ERP System|
+:Erstellung Rechnung;
+|Mitarbeiter|
+:Lagerentnahme;
+|ERP System|
+:Buchung Bestandsminderung;
+|Mitarbeiter|
+:Fakturierung;
+:Übergabe an Spedition;
+|Webshop|
+:Versand E-Mail "Bestellung versandt";
+|Kunde|
+:Erhalt E-Mail "Bestellung versandt";
+:Erhalt der Ware;
+|Webshop|
+:Versand E-Mail "Bestellung zugestellt";
+|Kunde|
+:Erhalt E-Mail "Bestellung zugestellt";
+stop
+@enduml
