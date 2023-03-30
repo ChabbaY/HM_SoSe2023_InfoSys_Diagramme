@@ -17,9 +17,9 @@ mit korrekten Zugangsdaten;
 :Datenbankabfrage;
 |ERP System|
 :Verfügbarkeitsprüfung;
-if (kleine Menge?)) then
+if (kleine Menge?) then (ja)
     :Rückgabe als Zahl;
-else
+else (nein)
     :Rückgabe als "Verfügbar";
 endif
 |Webshop|
@@ -34,10 +34,10 @@ Bestellübersicht;
 :"Jetzt kostenpflichtig bestellen";
 |ERP System|
 :Verfügbarkeitsprüfung;
-if (Verfügbar?) then
+if (Verfügbar?) then (ja)
     :Reservierung
     der ausgewählten Menge;
-else
+else (nein)
     :Fehlermeldung;
     end
 endif
@@ -47,14 +47,19 @@ endif
 |Kunde|
 :Erhalt E-Mail "Bestellung erfolgreich";
 |ERP System|
+:Anlage Kundenauftrag;
 :Erstellung Rechnung;
 |Mitarbeiter|
 :Lagerentnahme;
 |ERP System|
-:Buchung Bestandsminderung;
+:Buchung Warenausgang;
 |Mitarbeiter|
 :Fakturierung;
-:Übergabe an Spedition;
+if (Selbstauslieferung?) then (ja)
+    :Selbstauslieferung;
+else (nein)
+    :Übergabe an Spedition;
+endif
 |Webshop|
 :Versand E-Mail "Bestellung versandt";
 |Kunde|
