@@ -1,8 +1,7 @@
 @startuml
 |Kunde|
 start
-:Anmeldung bei amazon.com
-mit korrekten Zugangsdaten;
+:Authentisierung bei amazon.com;
 |Webshop|
 :Authentifizierung;
 :Darstellung Startseite;
@@ -16,7 +15,7 @@ mit korrekten Zugangsdaten;
 |Webshop|
 :Datenbankabfrage;
 |ERP System|
-:Verfügbarkeitsprüfung;
+:Grobe Verfügbarkeitsprüfung;
 if (kleine Menge?) then (ja)
     :Rückgabe als Zahl;
 else (nein)
@@ -27,16 +26,14 @@ endif
 |Kunde|
 :"Jetzt kaufen";
 |Webshop|
-:Darstellung
-Bestellübersicht;
+:Darstellung Bestellübersicht;
 |Kunde|
 :Auswahl hinterlegter Kreditkarte;
 :"Jetzt kostenpflichtig bestellen";
 |ERP System|
 :Verfügbarkeitsprüfung;
 if (Verfügbar?) then (ja)
-    :Reservierung
-    der ausgewählten Menge;
+    :Reservierung der ausgewählten Menge;
 else (nein)
     :Fehlermeldung;
     end
@@ -48,18 +45,17 @@ endif
 :Erhalt E-Mail "Bestellung erfolgreich";
 |ERP System|
 :Anlage Kundenauftrag;
-:Erstellung Rechnung;
+:Fakturierung;
 |Mitarbeiter|
 :Lagerentnahme;
 |ERP System|
+:Buchung Lagerausgang;
+|Mitarbeiter|
+:Verpackung;
+|ERP System|
 :Buchung Warenausgang;
 |Mitarbeiter|
-:Fakturierung;
-if (Selbstauslieferung?) then (ja)
-    :Selbstauslieferung;
-else (nein)
-    :Übergabe an Spedition;
-endif
+:Übergabe an Zustelldienst;
 |Webshop|
 :Versand E-Mail "Bestellung versandt";
 |Kunde|
@@ -69,5 +65,7 @@ endif
 :Versand E-Mail "Bestellung zugestellt";
 |Kunde|
 :Erhalt E-Mail "Bestellung zugestellt";
+|ERP System|
+:Buchung Zahlungseingang;
 stop
 @enduml
